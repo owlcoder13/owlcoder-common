@@ -1,0 +1,11 @@
+{
+    "name": "owlcoder/common",
+    "description": "Library for usage from other libraries",
+    "authors": [
+        {
+            "name": "Mikhail",
+            "email": "owlcoder1@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
