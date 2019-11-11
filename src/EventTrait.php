@@ -1,6 +1,6 @@
 <?php
 
-namespace Owl\Common;
+namespace Owlcoder\Common;
 
 trait EventTrait
 {

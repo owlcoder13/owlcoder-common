@@ -1,6 +1,6 @@
 <?php
 
-namespace Owl\Common\Helpers;
+namespace Owlcoder\Common\Helpers;
 
 use ArrayAccess;
 use Closure;
