@@ -20,7 +20,7 @@ trait EventTrait
     {
         if (isset($this->_events[$eventName]) && is_array($this->_events[$eventName])) {
             foreach ($this->_events[$eventName] as $event) {
-                call_user_func_array($event, ...$params);
+                call_user_func_array($event, $params);
             }
         }
     }
