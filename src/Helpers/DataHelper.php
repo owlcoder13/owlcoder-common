@@ -113,7 +113,7 @@ class DataHelper
             } elseif (is_object($target) && isset($target->{$segment})) {
                 $target = $target->{$segment};
             } else {
-                return self::value($default);
+                $target = self::value($default);
             }
         }
 
