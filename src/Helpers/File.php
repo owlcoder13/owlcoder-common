@@ -53,4 +53,67 @@ class File
 
         return $fileName;
     }
+
+    /**
+     * Transform files input to nice array
+     * Took from https://www.php.net/manual/en/reserved.variables.files.php
+     * [0] => Array
+     * (
+     *  [name] => facepalm.jpg
+     *  [type] => image/jpeg
+     *  [tmp_name] => /tmp/php3zU3t5
+     *  [error] => 0
+     *  [size] => 31059
+     * )
+     *
+     * [1] => Array
+     * (
+     *  [name] => facepalm2.jpg
+     *  [type] => image/jpeg
+     *  [tmp_name] => /tmp/phpJutmOS
+     *  [error] => 0
+     *  [size] => 78085
+     * )
+     *
+     * [2] => Array
+     * (
+     *  [name] => facepalm3.jpg
+     *  [type] => image/jpeg
+     *  [tmp_name] => /tmp/php9bNI8F
+     *  [error] => 0
+     *  [size] => 61429
+     * )
+     *
+     * @param $files
+     * @return array
+     */
+    public static function TransformFiles($files)
+    {
+        $output = [];
+        foreach ($files as $name => $array) {
+            foreach ($array as $field => $value) {
+                $pointer = &$output[$name];
+                if ( ! is_array($value)) {
+                    $pointer[$field] = $value;
+                    continue;
+                }
+                $stack = [&$pointer];
+                $iterator = new \RecursiveIteratorIterator(
+                    new \RecursiveArrayIterator($value),
+                    \RecursiveIteratorIterator::SELF_FIRST
+                );
+                foreach ($iterator as $key => $value) {
+                    array_splice($stack, $iterator->getDepth() + 1);
+                    $pointer = &$stack[count($stack) - 1];
+                    $pointer = &$pointer[$key];
+                    $stack[] = &$pointer;
+                    if ( ! $iterator->hasChildren()) {
+                        $pointer[$field] = $value;
+                    }
+                }
+            }
+        }
+
+        return $output;
+    }
 }
