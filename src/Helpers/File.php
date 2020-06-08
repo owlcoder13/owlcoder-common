@@ -31,6 +31,10 @@ class File
 
     public static function uniqueFileName($directory, $fileName, $slug = true)
     {
+        if ( ! file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
         if ($slug) {
             $fileName = self::slugFileName($fileName);
         }
