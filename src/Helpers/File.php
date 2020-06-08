@@ -116,4 +116,25 @@ class File
 
         return $output;
     }
+
+    /**
+     * Iterates over directory and exclude . and .. items
+     * @param $path
+     * @return \Generator
+     */
+    public static function IteratePath($path)
+    {
+        if (strrpos($path, '/') !== 0) {
+            $path .= '/';
+        }
+
+        foreach (scandir($path) as $one) {
+
+            if ($one == '.' || $one == '..') {
+                continue;
+            }
+
+            yield $path . $one;
+        }
+    }
 }
