@@ -50,7 +50,7 @@ class File
             do {
                 $newFileName = $fileName . '-' . $i++ . '.' . $ext;
                 $fullPath = self::removeDoubleSlash($directory . '/' . $newFileName);
-            } while (file_exists($newFileName));
+            } while (file_exists($fullPath));
 
             return $newFileName;
         }
