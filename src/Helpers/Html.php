@@ -26,6 +26,11 @@ class Html
         return $html;
     }
 
+    public static function img($src, $attributes = [])
+    {
+        return self::tag('img', '', array_merge($attributes, ['src' => $src]));
+    }
+
     public static function buildAttributes($attributes)
     {
         if (count($attributes) == 0) {
