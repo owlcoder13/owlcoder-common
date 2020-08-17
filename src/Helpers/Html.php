@@ -26,6 +26,11 @@ class Html
         return $html;
     }
 
+    public static function img($src, $attributes = [])
+    {
+        return self::tag('img', '', array_merge($attributes, ['src' => $src]));
+    }
+
     public static function buildAttributes($attributes)
     {
         if (count($attributes) == 0) {
@@ -35,9 +40,37 @@ class Html
         $out = [];
 
         foreach ($attributes as $key => $value) {
+            if ($value === null) {
+                continue;
+            }
+
             $out[] = $key . '="' . static::escape($value) . '"';
         }
 
         return ' ' . join(' ', $out);
+    }
+
+    public static function select($name = '', $value = null, $options = [], $htmlOptions = [])
+    {
+        $renderOptions = [];
+
+        foreach ($options as $key => $one) {
+            $selected = $value == $key ? true : null;
+            $renderOptions[] = self::tag('option', $one, [
+                'value' => $key,
+                'selected' => $selected
+            ]);
+        }
+
+        return self::tag('select', join('', $renderOptions), array_merge(['name' => $name], $htmlOptions));
+    }
+
+    public static function textInput($name = '', $value = null, $htmlOptions = [])
+    {
+        return self::tag('input', '', array_merge([
+            'type' => 'text',
+            'name' => $name,
+            'value' => $value,
+        ], $htmlOptions));
     }
 }
