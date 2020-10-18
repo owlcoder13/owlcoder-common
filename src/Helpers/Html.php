@@ -73,4 +73,9 @@ class Html
             'value' => $value,
         ], $htmlOptions));
     }
+
+    public static function link($name, $url = '#', $options = [])
+    {
+        return Html::tag('a', $name, array_merge(['href' => $url], $options));
+    }
 }
