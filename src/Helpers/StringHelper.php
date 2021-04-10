@@ -99,4 +99,9 @@ class StringHelper
 
         return $format_phone;
     }
+
+    public static function contains($source, $needle)
+    {
+        return mb_strpos($source, $needle) !== false;
+    }
 }
