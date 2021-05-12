@@ -68,6 +68,7 @@ class ArrayHelper
     /**
      * Преобразует массив таким образом, что одно из полей элемента в массиве
      * становится ключём нового ассоциативного массива
+     * $callback принимает в себя параметры $item, $key (ключ идёт вторым параметром)
      *
      * @param $arr
      * @param $field
@@ -107,6 +108,26 @@ class ArrayHelper
                     $out[] = $one;
                 }
             }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Возвращает key => value массив.
+     * $callback должен возвращать массив из двух элементов - ключ, значение
+     *
+     * @param $arr
+     * @param $callback
+     * @return array
+     */
+    public static function mapKeyValue($arr, $callback)
+    {
+        $out = [];
+
+        foreach ($arr as $k => $item) {
+            list($key, $value) = $callback($item, $k);
+            $out[$key] = $value;
         }
 
         return $out;
