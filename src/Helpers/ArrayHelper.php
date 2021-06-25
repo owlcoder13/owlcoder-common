@@ -2,6 +2,8 @@
 
 namespace Owlcoder\Common\Helpers;
 
+use Closure;
+
 class ArrayHelper
 {
     public static function getColumn($array, $column)
@@ -17,10 +19,30 @@ class ArrayHelper
 
     public static function first($array, $callback, $default = null)
     {
-        foreach ($array as $key => $value) {
-            if ($callback($value, $key)) {
-                return $value;
+        if (is_iterable($array)) {
+            foreach ($array as $key => $value) {
+                if ($callback($value, $key)) {
+                    return $value;
+                }
             }
+        }
+
+        return $default;
+    }
+
+    /**
+     * Pop value from associative array and delete it in the array
+     * @param $arr
+     * @param $key
+     * @param null $default
+     * @return mixed|null
+     */
+    public static function assocPop(&$arr, $key, $default = null)
+    {
+        if (isset($arr[$key])) {
+            $val = $arr[$key];
+            unset($arr[$key]);
+            return $val;
         }
 
         return $default;
@@ -46,6 +68,7 @@ class ArrayHelper
     /**
      * Преобразует массив таким образом, что одно из полей элемента в массиве
      * становится ключём нового ассоциативного массива
+     * $callback принимает в себя параметры $item, $key (ключ идёт вторым параметром)
      *
      * @param $arr
      * @param $field
@@ -85,6 +108,26 @@ class ArrayHelper
                     $out[] = $one;
                 }
             }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Возвращает key => value массив.
+     * $callback должен возвращать массив из двух элементов - ключ, значение
+     *
+     * @param $arr
+     * @param $callback
+     * @return array
+     */
+    public static function mapKeyValue($arr, $callback)
+    {
+        $out = [];
+
+        foreach ($arr as $k => $item) {
+            list($key, $value) = $callback($item, $k);
+            $out[$key] = $value;
         }
 
         return $out;
