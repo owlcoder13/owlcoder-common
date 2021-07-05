@@ -114,6 +114,55 @@ class ArrayHelper
     }
 
     /**
+     * Преобразует модели по заданному конфигу в массив
+     *
+     * @param $model
+     * @param $options
+     * @return array
+     * @throws \Exception
+     */
+    public static function toArray($model, $options)
+    {
+        $isArray = is_array($model);
+
+        if ($isArray) {
+            $o = static::map(function ($item) use ($options) {
+                return static::toArray($item, $options);
+            }, $model);
+            return $o;
+
+        }
+
+        $class = get_class($model);
+
+        $out = [];
+
+        if (isset($options[$class])) {
+
+            foreach ($options[$class] as $key => $one) {
+
+                if (is_string($one)) {
+                    $a = $model->{$one};
+
+                    if (is_object($a)) {
+                        $out[$one] = static::toArray($a, $options);
+                    } else if (is_array($a)) {
+                        $out[$one] = static::toArray($a, $options);
+                    } else {
+                        $out[$one] = $a;
+                    }
+                } else if (is_callable($one)) {
+                    $out[$key] = $one($model);
+                }
+            }
+        } else {
+            throw new \Exception("dont know how to translate to array (");
+        }
+
+        return $out;
+    }
+
+    /**
      * Возвращает key => value массив.
      * $callback должен возвращать массив из двух элементов - ключ, значение
      *
