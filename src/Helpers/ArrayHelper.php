@@ -114,6 +114,32 @@ class ArrayHelper
     }
 
     /**
+     * Ищет первый элемент в массиве. также как и filter
+     *
+     * @param $arr
+     * @param $callback
+     * @param false $keepKeys
+     * @return array
+     */
+    public static function find($arr, $callback, $returnKey = false)
+    {
+        $out = [];
+
+        foreach ($arr as $key => $one) {
+
+            if ($callback($one, $key)) {
+                if ($returnKey) {
+                    return [$one, $key];
+                } else {
+                    return $one;
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    /**
      * Преобразует модели по заданному конфигу в массив
      *
      * @param $model
