@@ -182,7 +182,7 @@ class ArrayHelper
                 }
             }
         } else {
-            throw new \Exception("dont know how to translate to array (");
+            throw new \Exception("dont know how to translate to array: " . $class);
         }
 
         return $out;
