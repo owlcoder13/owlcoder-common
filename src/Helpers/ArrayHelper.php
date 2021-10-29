@@ -123,8 +123,6 @@ class ArrayHelper
      */
     public static function find($arr, $callback, $returnKey = false)
     {
-        $out = [];
-
         foreach ($arr as $key => $one) {
 
             if ($callback($one, $key)) {
@@ -136,7 +134,7 @@ class ArrayHelper
             }
         }
 
-        return $out;
+        return false;
     }
 
     /**
