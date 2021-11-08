@@ -205,4 +205,29 @@ class ArrayHelper
 
         return $out;
     }
+
+    /**
+     * Метод позволяет рекурсивно искать элемент в массиве
+     * @param $callback
+     * @param $arr
+     * @param string $childProp
+     * @return false|mixed
+     */
+    public function arraySearchRecursive($callback, &$arr, $childProp = 'children')
+    {
+        foreach ($arr as $key => &$value) {
+            if ($callback($value, $key)) {
+                return $value;
+            }
+
+            $children = $value['children'] ?? [];
+            $chResult = $this->arraySearchRecursive($callback, $children, $childProp);
+
+            if ($chResult !== false) {
+                return $chResult;
+            }
+        }
+
+        return false;
+    }
 }
