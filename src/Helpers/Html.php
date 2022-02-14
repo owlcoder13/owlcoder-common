@@ -4,9 +4,7 @@ namespace Owlcoder\Common\Helpers;
 
 class Html
 {
-    public static $selfTag = [
-        ['img', 'meta', 'input'],
-    ];
+    public static $selfTag = ['img', 'meta', 'input', 'link'];
 
     public static function escape($value, $doubleQuotes = true)
     {
