@@ -17,7 +17,7 @@ class Html
 
         $html = "<$tagName" . static::buildAttributes($attributes) . ($closeTag ? '/>' : '>');
 
-        if ( ! $closeTag) {
+        if (!$closeTag) {
             $html .= "{$content}</{$tagName}>";
         }
 
@@ -69,6 +69,14 @@ class Html
             'type' => 'text',
             'name' => $name,
             'value' => $value,
+        ], $htmlOptions));
+    }
+
+    public static function textarea($name = '', $value = null, $htmlOptions = [])
+    {
+        return self::tag('textarea', $value == null ? '' : $value, array_merge([
+            'type' => 'text',
+            'name' => $name,
         ], $htmlOptions));
     }
 
