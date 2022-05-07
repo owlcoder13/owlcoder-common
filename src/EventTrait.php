@@ -16,7 +16,7 @@ trait EventTrait
         $this->_events[$eventName][] = $callback;
     }
 
-    public function triggerEvent($eventName, ...$params)
+    public function triggerEvent($eventName, &...$params)
     {
         if (isset($this->_events[$eventName]) && is_array($this->_events[$eventName])) {
             foreach ($this->_events[$eventName] as $event) {
