@@ -17,9 +17,10 @@ class File
     public static function slugFileName($fileName, $replacer = '-')
     {
         list($file, $ext) = self::splitFileNameExtension($fileName);
-        $file = transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0080-\uffff] remove', $file);
-        $file = preg_replace('/@/u', 'at', $file);
-        $file = preg_replace('/[^a-z0-9-]/u', '', $file);
+        // $file = transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0080-\uffff] remove', $file);
+        // $file = preg_replace('/@/u', 'at', $file);
+        // $file = preg_replace('/[^a-z0-9-]/u', '', $file);
+        $file = \Str::slug($file);
 
         return $file . '.' . $ext;
     }
