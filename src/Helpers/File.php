@@ -20,7 +20,7 @@ class File
         // $file = transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0080-\uffff] remove', $file);
         // $file = preg_replace('/@/u', 'at', $file);
         // $file = preg_replace('/[^a-z0-9-]/u', '', $file);
-        $file = \Str::slug($file);
+        $file = StringHelper::transliterate($file);
 
         return $file . '.' . $ext;
     }
